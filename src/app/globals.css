@@ -1,26 +1,101 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-background: #0a0a0a;
+  --color-foreground: #ededed;
+
+  --color-primary: #d4af37;
+  /* Gold accent */
+  --color-primary-foreground: #111111;
+
+  --color-card: #1a1a1a;
+  --color-card-foreground: #ededed;
+
+  --color-muted: #2a2a2a;
+  --color-muted-foreground: #a3a3a3;
+
+  --color-border: #333333;
+
+  /* Custom shadows for premium feel */
+  --shadow-premium: 0 4px 24px -4px rgba(0, 0, 0, 0.4), 0 2px 8px -2px rgba(0, 0, 0, 0.2);
+  --shadow-premium-hover: 0 12px 48px -12px rgba(212, 175, 55, 0.15), 0 4px 16px -4px rgba(0, 0, 0, 0.3);
+
+  /* Fonts */
+  --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-cormorant: var(--font-cormorant), ui-serif, Georgia, serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@custom-variant dark (&:is(.dark *));
 
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
+    --background: #ffffff;
+    --foreground: #171717;
+    --primary: #d4af37;
+    /* Luxurious gold */
+    --primary-foreground: #ffffff;
+    --card: #ffffff;
+    --card-foreground: #171717;
+    --muted: #f5f5f5;
+    --muted-foreground: #737373;
+    --border: #e5e5e5;
+  }
+
+  .dark {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --primary: #d4af37;
+    --primary-foreground: #000000;
+    --card: #141414;
+    --card-foreground: #ededed;
+    --muted: #262626;
+    --muted-foreground: #a3a3a3;
+    --border: #333333;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: Arial, Helvetica, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Premium utility classes */
+@layer utilities {
+  .glass-panel {
+    @apply bg-card/80 backdrop-blur-lg border border-border/50 shadow-sm;
+  }
+
+  .premium-shadow {
+    box-shadow: 0 8px 32px -8px rgba(0, 0, 0, 0.08), 0 2px 8px -2px rgba(0, 0, 0, 0.04);
+  }
+
+  .dark .premium-shadow {
+    box-shadow: 0 8px 32px -8px rgba(0, 0, 0, 0.4), 0 2px 8px -2px rgba(0, 0, 0, 0.2);
+  }
+
+  .premium-transition {
+    @apply transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)];
+  }
+
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
 }
