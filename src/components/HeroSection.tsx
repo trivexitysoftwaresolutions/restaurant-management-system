@@ -29,7 +29,7 @@ export function HeroSection() {
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/20 bg-black/20 backdrop-blur-md mb-8 shadow-2xl">
             <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
             <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-white/90">
-              Table {restaurantData.tableNumber} Session
+              Active Digital Menu
             </span>
           </div>
 
@@ -43,7 +43,7 @@ export function HeroSection() {
           </h1>
 
           <p className="text-white/80 font-light text-sm md:text-base max-w-sm mb-10 tracking-wide leading-relaxed text-balance drop-shadow-md">
-            Explore our curated menu, customize your order, and experience seamless tableside service.
+            Explore our curated menu, customize your order, and collect it fresh from the counter.
           </p>
 
           <div className="flex items-center gap-4">

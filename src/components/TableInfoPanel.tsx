@@ -22,8 +22,8 @@ export function TableInfoPanel() {
             <Users className="w-6 h-6 text-primary" />
           </div>
           <div>
-            <h3 className="font-cormorant text-2xl font-bold text-white">Your Table</h3>
-            <p className="text-sm text-[#A3A3A3]">Table {restaurantData.tableNumber} • Capacity: {restaurantData.capacity}</p>
+            <h3 className="font-cormorant text-2xl font-bold text-white">Your Session</h3>
+            <p className="text-sm text-[#A3A3A3]">Active Digital Ordering Session</p>
           </div>
         </div>
 
@@ -51,7 +51,7 @@ export function TableInfoPanel() {
           </div>
           <div>
             <h3 className="font-semibold text-white">Contactless & Hygienic</h3>
-            <p className="text-sm text-[#A3A3A3]">Your order goes straight to the kitchen. Pay digitally when you're ready to leave.</p>
+            <p className="text-sm text-[#A3A3A3]">Your order goes straight to the kitchen. Collect your food when your token is ready.</p>
           </div>
         </div>
       </motion.div>
