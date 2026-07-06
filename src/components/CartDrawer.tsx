@@ -4,9 +4,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, Minus, Plus, Trash2, ShoppingBag } from "lucide-react";
 import Image from "next/image";
 import { useCart } from "@/context/CartContext";
+import { useCustomer } from "@/context/CustomerContext";
 
 export function CartDrawer() {
   const { cart, isDrawerOpen, setIsDrawerOpen, updateQuantity, removeFromCart, totalPrice, totalItems, placeOrder } = useCart();
+  const { isRegistered, setIsModalOpen } = useCustomer();
 
   return (
     <AnimatePresence>
@@ -76,7 +78,7 @@ export function CartDrawer() {
                         </button>
                       </div>
                       <div className="flex items-center justify-between mt-3">
-                        <span className="font-bold text-primary">${(item.menuItem.price * item.quantity).toFixed(2)}</span>
+                        <span className="font-bold text-primary">₹{(item.menuItem.price * item.quantity).toFixed(2)}</span>
                         
                         <div className="flex items-center gap-3 bg-[#222] rounded-full px-2 py-1">
                           <button 
@@ -106,20 +108,27 @@ export function CartDrawer() {
                 <div className="space-y-3 mb-6">
                   <div className="flex justify-between text-sm text-[#A3A3A3]">
                     <span>Subtotal</span>
-                    <span>${totalPrice.toFixed(2)}</span>
+                    <span>₹{totalPrice.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between text-sm text-[#A3A3A3]">
                     <span>Taxes (8%)</span>
-                    <span>${(totalPrice * 0.08).toFixed(2)}</span>
+                    <span>₹{(totalPrice * 0.08).toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between font-bold text-lg text-white pt-3 border-t border-[#333]">
                     <span>Total</span>
-                    <span>${(totalPrice * 1.08).toFixed(2)}</span>
+                    <span>₹{(totalPrice * 1.08).toFixed(2)}</span>
                   </div>
                 </div>
                 <button 
                   className="w-full bg-primary text-primary-foreground py-4 rounded-2xl font-bold text-lg hover:scale-[1.02] active:scale-95 premium-transition shadow-[0_0_20px_rgba(212,175,55,0.3)]"
-                  onClick={() => placeOrder()}
+                  onClick={() => {
+                    if (!isRegistered) {
+                      setIsModalOpen(true);
+                      setIsDrawerOpen(false); // Optionally close cart drawer while onboarding
+                    } else {
+                      placeOrder();
+                    }
+                  }}
                 >
                   Place Order
                 </button>

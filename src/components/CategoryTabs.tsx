@@ -25,7 +25,7 @@ export function CategoryTabs({ activeCategory, setActiveCategory }: CategoryTabs
         </div>
       </div>
 
-      <div className="flex overflow-x-auto hide-scrollbar gap-6 px-4 pb-4 snap-x">
+      <div className="flex overflow-x-auto hide-scrollbar gap-6 px-4 pt-2 pb-4 snap-x">
         {menuCategories.map((category) => {
           const isActive = activeCategory === category.name;
           return (

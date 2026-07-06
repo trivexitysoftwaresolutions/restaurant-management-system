@@ -28,6 +28,7 @@ interface CartContextType {
   placedTotalPrice: number;
   showSuccessToast: boolean;
   setShowSuccessToast: (show: boolean) => void;
+  orderToken: string | null;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -38,6 +39,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isMyOrdersOpen, setIsMyOrdersOpen] = useState(false);
   const [showSuccessToast, setShowSuccessToast] = useState(false);
+  const [orderToken, setOrderToken] = useState<string | null>(null);
   const [isInitialized, setIsInitialized] = useState(false);
 
   // Load from local storage
@@ -58,6 +60,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         console.error("Failed to parse placed orders");
       }
     }
+    const storedToken = localStorage.getItem("restro_order_token");
+    if (storedToken) {
+      setOrderToken(storedToken);
+    }
     setIsInitialized(true);
   }, []);
 
@@ -66,8 +72,13 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     if (isInitialized) {
       localStorage.setItem("restro_cart", JSON.stringify(cart));
       localStorage.setItem("restro_placed_orders", JSON.stringify(placedOrders));
+      if (orderToken) {
+        localStorage.setItem("restro_order_token", orderToken);
+      } else {
+        localStorage.removeItem("restro_order_token");
+      }
     }
-  }, [cart, placedOrders, isInitialized]);
+  }, [cart, placedOrders, orderToken, isInitialized]);
 
   const addToCart = (menuItem: MenuItem) => {
     setCart((prev) => {
@@ -117,6 +128,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       return newOrders;
     });
     
+    // Generate order token if this is the first time placing an order
+    if (!orderToken) {
+      const generatedToken = `#${Math.floor(100 + Math.random() * 900)}`;
+      setOrderToken(generatedToken);
+    }
+    
     setCart([]); // Empty the cart
     setIsDrawerOpen(false); // Close cart drawer
     setShowSuccessToast(true); // Show success message
@@ -158,6 +175,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         placedTotalPrice,
         showSuccessToast,
         setShowSuccessToast,
+        orderToken,
       }}
     >
       {children}

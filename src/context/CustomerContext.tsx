@@ -7,7 +7,6 @@ interface CustomerData {
   name: string;
   phone: string;
   email?: string;
-  tableNumber: string;
   sessionEndTime: number;
 }
 
@@ -15,6 +14,8 @@ interface CustomerContextType {
   customer: CustomerData | null;
   setCustomer: (data: CustomerData) => void;
   isRegistered: boolean;
+  isModalOpen: boolean;
+  setIsModalOpen: (isOpen: boolean) => void;
   extendSession: (minutes: number) => void;
   clearSession: () => void;
 }
@@ -23,6 +24,7 @@ const CustomerContext = createContext<CustomerContextType | undefined>(undefined
 
 export function CustomerProvider({ children }: { children: React.ReactNode }) {
   const [customer, setCustomerState] = useState<CustomerData | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isInitialized, setIsInitialized] = useState(false);
 
   useEffect(() => {
@@ -64,7 +66,15 @@ export function CustomerProvider({ children }: { children: React.ReactNode }) {
   if (!isInitialized) return null;
 
   return (
-    <CustomerContext.Provider value={{ customer, setCustomer, isRegistered: !!customer, extendSession, clearSession }}>
+    <CustomerContext.Provider value={{ 
+      customer, 
+      setCustomer, 
+      isRegistered: !!customer, 
+      isModalOpen,
+      setIsModalOpen,
+      extendSession, 
+      clearSession 
+    }}>
       {children}
     </CustomerContext.Provider>
   );

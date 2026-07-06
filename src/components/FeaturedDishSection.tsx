@@ -2,10 +2,14 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { Plus } from "lucide-react";
 import { menuItems } from "@/lib/data";
+import { useCart } from "@/context/CartContext";
 
 export function FeaturedDishSection() {
+  const router = useRouter();
+  const { addToCart } = useCart();
   const featured = menuItems.filter((item) => item.isSignature);
 
   if (featured.length === 0) return null;
@@ -24,42 +28,72 @@ export function FeaturedDishSection() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ delay: index * 0.1, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="group relative min-w-[280px] md:min-w-[400px] h-72 md:h-80 rounded-3xl overflow-hidden cursor-pointer snap-start"
+            onClick={() => router.push(`/dish/${item.id}`)}
+            className="group relative min-w-[320px] md:min-w-[420px] h-[400px] md:h-[440px] rounded-[2.5rem] overflow-hidden cursor-pointer snap-start border border-white/10 shadow-2xl"
           >
-            <Image
-              src={item.image}
-              alt={item.name}
-              fill
-              className="object-cover object-center group-hover:scale-105 premium-transition"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent opacity-90" />
+            {/* Ambient Blurred Background */}
+            <div className="absolute inset-0 z-0 bg-black">
+              <Image
+                src={item.image}
+                alt=""
+                fill
+                className="object-cover scale-125 blur-3xl opacity-40 group-hover:opacity-60 transition-opacity duration-700"
+              />
+              <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/60 to-[#0a0a0a]" />
+            </div>
 
-            <div className="absolute inset-0 p-6 flex flex-col justify-end">
-              <div className="flex items-center gap-2 mb-2">
-                <span className="bg-primary/90 text-primary-foreground text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-sm backdrop-blur-sm">
-                  Signature
-                </span>
-                {item.rating && (
-                  <span className="bg-background/80 text-foreground text-[10px] font-bold px-2 py-1 rounded-sm backdrop-blur-sm">
-                    ★ {item.rating}
+            {/* Content Container */}
+            <div className="absolute inset-0 z-10 p-4 md:p-5 flex flex-col">
+              
+              {/* Image Frame (Top) - 100% unobstructed image */}
+              <div className="relative w-full h-[50%] md:h-[55%] rounded-3xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.6)] border border-white/10 bg-black/20">
+                <Image
+                  src={item.image}
+                  alt={item.name}
+                  fill
+                  className="object-cover object-center group-hover:scale-105 transition-transform duration-700"
+                />
+                
+                {/* Badges */}
+                <div className="absolute top-3 left-3">
+                  <span className="bg-primary/95 backdrop-blur-md text-primary-foreground text-[10px] md:text-xs font-bold uppercase tracking-wider px-3 py-1.5 rounded-full shadow-lg">
+                    Signature
                   </span>
+                </div>
+                {item.rating && (
+                  <div className="absolute top-3 right-3">
+                    <span className="bg-black/70 backdrop-blur-md text-white text-[10px] md:text-xs font-bold px-3 py-1.5 rounded-full shadow-lg flex items-center gap-1">
+                      <span className="text-primary">★</span> {item.rating}
+                    </span>
+                  </div>
                 )}
               </div>
 
-              <h3 className="font-cormorant text-2xl font-bold text-foreground leading-tight mb-2">
-                {item.name}
-              </h3>
+              {/* Text Content (Bottom) - 100% readable */}
+              <div className="flex-1 mt-5 md:mt-6 px-2 flex flex-col">
+                <h3 className="font-cormorant text-2xl md:text-3xl font-bold text-white leading-tight mb-2 group-hover:text-primary transition-colors">
+                  {item.name}
+                </h3>
+                
+                <p className="text-white/60 text-sm line-clamp-2 leading-relaxed mb-auto">
+                  {item.description}
+                </p>
 
-              <p className="text-muted-foreground text-sm line-clamp-2 mb-4 max-w-[85%]">
-                {item.description}
-              </p>
-
-              <div className="flex items-center justify-between mt-auto pt-4 border-t border-white/10">
-                <span className="font-semibold text-lg text-primary">${item.price.toFixed(2)}</span>
-                <button className="bg-white/10 hover:bg-primary hover:text-primary-foreground backdrop-blur-md text-foreground w-10 h-10 rounded-full flex items-center justify-center premium-transition active:scale-95">
-                  <Plus className="w-5 h-5" />
-                </button>
+                <div className="flex items-center justify-between pt-4 mt-2 border-t border-white/10">
+                  <span className="font-semibold text-2xl text-primary">₹{item.price.toFixed(2)}</span>
+                  <button 
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      addToCart(item);
+                    }}
+                    className="bg-white/5 hover:bg-primary hover:text-primary-foreground text-white backdrop-blur-md w-12 h-12 rounded-full flex items-center justify-center premium-transition active:scale-95 border border-white/10 shadow-xl group-hover:rotate-90"
+                  >
+                    <Plus className="w-5 h-5 md:w-6 md:h-6" />
+                  </button>
+                </div>
               </div>
+
             </div>
           </motion.div>
         ))}

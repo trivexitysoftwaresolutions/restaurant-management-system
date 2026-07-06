@@ -30,7 +30,7 @@ export function StickyCartBar() {
               </div>
               <div className="flex flex-col items-start">
                 <span className="text-sm font-semibold leading-none">View Order</span>
-                <span className="text-xs opacity-90 mt-1 font-medium">${totalPrice.toFixed(2)}</span>
+                <span className="text-xs opacity-90 mt-1 font-medium">₹{totalPrice.toFixed(2)}</span>
               </div>
             </div>
             

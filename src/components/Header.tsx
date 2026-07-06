@@ -11,7 +11,7 @@ import { useCart } from "@/context/CartContext";
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const { customer } = useCustomer();
-  const { placedOrders, setIsMyOrdersOpen } = useCart();
+  const { placedOrders, setIsMyOrdersOpen, orderToken } = useCart();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -49,8 +49,8 @@ export function Header() {
             <h1 className={clsx("font-cormorant text-lg font-semibold leading-tight transition-colors duration-300", isScrolled ? "text-foreground" : "text-white drop-shadow-md")}>
               {customer ? `Hi, ${customer.name.split(" ")[0]}` : restaurantData.name}
             </h1>
-            <p className={clsx("text-[10px] uppercase tracking-widest font-medium transition-colors duration-300", isScrolled ? "text-muted-foreground" : "text-white/80")}>
-              Table {restaurantData.tableNumber}
+            <p className={clsx("text-[10px] uppercase tracking-widest font-medium transition-colors duration-300 line-clamp-1", isScrolled ? "text-muted-foreground" : "text-white/80")}>
+              {orderToken ? `Order Token: ${orderToken}` : restaurantData.tagline}
             </p>
           </div>
         </div>

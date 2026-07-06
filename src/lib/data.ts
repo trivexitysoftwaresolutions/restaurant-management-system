@@ -1,9 +1,8 @@
-export type OrderStatus = "received" | "preparing" | "ready" | "served";
+export type OrderStatus = "received" | "preparing" | "ready" | "ready_for_pickup";
 
 export interface RestaurantInfo {
   name: string;
   tagline: string;
-  tableNumber: string;
   currentOrderState: OrderStatus;
   estimatedPrepTime: string;
   capacity?: number;
@@ -25,9 +24,8 @@ export interface MenuItem {
 }
 
 export const restaurantData: RestaurantInfo = {
-  name: "L'Aura",
+  name: "Restro",
   tagline: "Modern European & Botanical Dining",
-  tableNumber: "12",
   currentOrderState: "preparing",
   estimatedPrepTime: "15-20 mins",
   capacity: 4,
@@ -51,7 +49,7 @@ export const menuItems: MenuItem[] = [
   { id: "s1", name: "Truffle Mushroom Risotto", description: "Arborio rice slow-cooked with wild mushrooms, finished with white truffle oil.", price: 32.0, image: "https://images.unsplash.com/photo-1626074353765-517a681e40be?auto=format&fit=crop&q=80&w=800", category: "Signatures", isVeg: true, isSignature: true, prepTime: "20m", rating: 4.9 },
   { id: "s2", name: "Wagyu Ribeye Steak", description: "Grade A5 Wagyu, blistered vine tomatoes, charred asparagus, and red wine jus.", price: 85.0, image: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&q=80&w=800", category: "Signatures", isVeg: false, isSignature: true, prepTime: "25m", rating: 4.8 },
   { id: "s3", name: "Miso Glazed Black Cod", description: "Sustainably sourced cod marinated in sweet saikyo miso.", price: 42.0, image: "https://images.unsplash.com/photo-1580476262798-bddd9f4b7369?auto=format&fit=crop&q=80&w=800", category: "Signatures", isVeg: false, isSignature: true, prepTime: "20m" },
-  { id: "s4", name: "Lobster Thermidor", description: "Classic French dish of lobster tail cooked in a rich wine sauce, stuffed back into the shell and browned.", price: 65.0, image: "https://images.unsplash.com/photo-1533682805518-48d1f5e8cd3e?auto=format&fit=crop&q=80&w=800", category: "Signatures", isVeg: false, isSignature: true, prepTime: "30m" },
+  { id: "s4", name: "Lobster Thermidor", description: "Classic French dish of lobster tail cooked in a rich wine sauce, stuffed back into the shell and browned.", price: 65.0, image: "https://images.unsplash.com/photo-1565557623262-b51c2513a641?auto=format&fit=crop&q=80&w=800", category: "Signatures", isVeg: false, isSignature: true, prepTime: "30m" },
   
   // Indian Curries
   { id: "ic1", name: "Butter Chicken Masala", description: "Tender chicken tikka cooked in a rich, creamy tomato and cashew gravy.", price: 24.0, image: "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&q=80&w=800", category: "Indian Curries", isVeg: false, isSpicy: true, prepTime: "20m", rating: 4.9 },

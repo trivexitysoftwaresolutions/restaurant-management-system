@@ -19,7 +19,7 @@ import { MyOrdersDrawer } from "@/components/MyOrdersDrawer";
 import { OrderSuccessToast } from "@/components/OrderSuccessToast";
 
 export const metadata: Metadata = {
-  title: "Premium QR Ordering | L'Aura",
+  title: "Premium QR Ordering | Restro",
   description: "Scan, order, and track your premium dining experience.",
 };
 

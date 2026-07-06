@@ -7,13 +7,13 @@ import { restaurantData } from "@/lib/data";
 import { useCart } from "@/context/CartContext";
 
 export function OrderStatusTracker() {
-  const { placedOrders, placedTotalPrice, setIsMyOrdersOpen } = useCart();
+  const { placedOrders, placedTotalPrice, setIsMyOrdersOpen, orderToken } = useCart();
 
   const states = [
     { id: "received", label: "Received", icon: Check },
     { id: "preparing", label: "Preparing", icon: ChefHat },
     { id: "ready", label: "Ready", icon: CheckCircle2 },
-    { id: "served", label: "Served", icon: UtensilsCrossed },
+    { id: "ready_for_pickup", label: "Ready for Pickup", icon: UtensilsCrossed },
   ];
 
   const currentStateIndex = states.findIndex((s) => s.id === restaurantData.currentOrderState);
@@ -29,8 +29,10 @@ export function OrderStatusTracker() {
       >
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h3 className="font-cormorant text-2xl font-bold text-white mb-1">Kitchen Tab</h3>
-            <p className="text-sm text-primary font-bold">Total: ${(placedTotalPrice * 1.08).toFixed(2)}</p>
+            <h3 className="font-cormorant text-3xl font-bold text-primary mb-1">
+              Order {orderToken || "#---"}
+            </h3>
+            <p className="text-sm text-white/80 font-medium mt-2">Total: ₹{(placedTotalPrice * 1.08).toFixed(2)}</p>
           </div>
           <div className="text-right">
             <p className="text-xs text-[#A3A3A3] mb-1">Items</p>
@@ -69,8 +71,9 @@ export function OrderStatusTracker() {
                     <state.icon className="w-4 h-4" />
                   </motion.div>
                   <span
-                    className={`text-[10px] uppercase tracking-wider font-semibold mt-3 ${isCompleted ? "text-foreground" : "text-muted-foreground"
-                      }`}
+                    className={`text-[9px] sm:text-[10px] uppercase tracking-widest font-semibold mt-3 text-center max-w-[70px] leading-tight ${
+                      isCompleted ? "text-foreground" : "text-muted-foreground"
+                    }`}
                   >
                     {state.label}
                   </span>

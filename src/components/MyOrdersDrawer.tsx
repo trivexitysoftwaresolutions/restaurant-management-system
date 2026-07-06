@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useCart } from "@/context/CartContext";
 
 export function MyOrdersDrawer() {
-  const { placedOrders, isMyOrdersOpen, setIsMyOrdersOpen, removePlacedOrder, placedTotalItems, placedTotalPrice } = useCart();
+  const { placedOrders, isMyOrdersOpen, setIsMyOrdersOpen, removePlacedOrder, placedTotalItems, placedTotalPrice, orderToken } = useCart();
 
   return (
     <AnimatePresence>
@@ -33,7 +33,9 @@ export function MyOrdersDrawer() {
             <div className="flex items-center justify-between p-6 border-b border-[#222]">
               <div className="flex items-center gap-3">
                 <Receipt className="w-6 h-6 text-primary" />
-                <h2 className="font-cormorant text-2xl font-bold text-white">Running Tab</h2>
+                <h2 className="font-cormorant text-2xl font-bold text-white">
+                  {orderToken ? `Order ${orderToken}` : "Running Tab"}
+                </h2>
                 <span className="bg-primary/20 text-primary text-xs font-bold px-2.5 py-1 rounded-full">
                   {placedTotalItems}
                 </span>
@@ -78,7 +80,7 @@ export function MyOrdersDrawer() {
                         </button>
                       </div>
                       <div className="flex items-center justify-between mt-3">
-                        <span className="font-bold text-primary">${(item.menuItem.price * item.quantity).toFixed(2)}</span>
+                        <span className="font-bold text-primary">₹{(item.menuItem.price * item.quantity).toFixed(2)}</span>
                         
                         <div className="flex items-center gap-2">
                           <span className="text-xs text-[#A3A3A3] uppercase tracking-wider font-semibold">Qty</span>
@@ -97,11 +99,11 @@ export function MyOrdersDrawer() {
                 <div className="space-y-3 mb-6">
                   <div className="flex justify-between text-sm text-[#A3A3A3]">
                     <span>Tab Subtotal</span>
-                    <span>${placedTotalPrice.toFixed(2)}</span>
+                    <span>₹{placedTotalPrice.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between font-bold text-lg text-white pt-3 border-t border-[#333]">
                     <span>Running Total (inc. tax)</span>
-                    <span className="text-primary">${(placedTotalPrice * 1.08).toFixed(2)}</span>
+                    <span className="text-primary">₹{(placedTotalPrice * 1.08).toFixed(2)}</span>
                   </div>
                 </div>
                 <div className="w-full bg-[#222] text-[#A3A3A3] py-4 rounded-2xl font-bold text-sm text-center">

@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { Plus, Minus, Flame, Leaf } from "lucide-react";
 import { MenuItem } from "@/lib/data";
 import { useCart } from "@/context/CartContext";
@@ -12,6 +13,7 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ item, index }: ProductCardProps) {
+  const router = useRouter();
   const { cart, addToCart, updateQuantity } = useCart();
 
   const cartItem = cart.find((c) => c.menuItem.id === item.id);
@@ -23,7 +25,8 @@ export function ProductCard({ item, index }: ProductCardProps) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ delay: index * 0.1, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-      className="glass-panel rounded-2xl overflow-hidden flex gap-4 p-3 hover:bg-white/5 premium-transition group h-full"
+      onClick={() => router.push(`/dish/${item.id}`)}
+      className="glass-panel rounded-2xl overflow-hidden flex gap-4 p-3 hover:bg-white/5 premium-transition group h-full cursor-pointer"
     >
       <div className="relative w-28 h-28 shrink-0 rounded-xl overflow-hidden bg-muted">
         <Image
@@ -61,7 +64,7 @@ export function ProductCard({ item, index }: ProductCardProps) {
 
         <div className="flex items-center justify-between mt-auto">
           <div className="flex items-center gap-2">
-            <span className="font-semibold text-sm">${item.price.toFixed(2)}</span>
+            <span className="font-semibold text-sm">₹{item.price.toFixed(2)}</span>
             {item.isSpicy && (
               <Flame className="w-3 h-3 text-orange-500" />
             )}
@@ -71,14 +74,22 @@ export function ProductCard({ item, index }: ProductCardProps) {
             {quantity > 0 ? (
               <div className="h-full bg-primary rounded-full flex items-center justify-between px-1 min-w-[72px] shadow-[0_0_15px_rgba(212,175,55,0.3)]">
                 <button
-                  onClick={() => updateQuantity(item.id, -1)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    updateQuantity(item.id, -1);
+                  }}
                   className="w-6 h-6 rounded-full bg-black/20 flex items-center justify-center text-primary-foreground hover:bg-black/40 transition-colors"
                 >
                   <Minus className="w-3 h-3" />
                 </button>
                 <span className="text-sm font-bold text-primary-foreground px-1">{quantity}</span>
                 <button
-                  onClick={() => updateQuantity(item.id, 1)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    updateQuantity(item.id, 1);
+                  }}
                   className="w-6 h-6 rounded-full bg-black/20 flex items-center justify-center text-primary-foreground hover:bg-black/40 transition-colors"
                 >
                   <Plus className="w-3 h-3" />
@@ -86,7 +97,11 @@ export function ProductCard({ item, index }: ProductCardProps) {
               </div>
             ) : (
               <button
-                onClick={() => addToCart(item)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  addToCart(item);
+                }}
                 className="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-foreground group-hover:bg-primary group-hover:text-primary-foreground premium-transition active:scale-95 shadow-sm"
               >
                 <Plus className="w-4 h-4" />
