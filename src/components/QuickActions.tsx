@@ -1,9 +1,12 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Utensils, BellRing, History, FileText } from "lucide-react";
+import { BookMenu } from "./BookMenu";
 
 export function QuickActions() {
+  const [isBookOpen, setIsBookOpen] = useState(false);
   const actions = [
     { icon: Utensils, label: "Menu", delay: 0.1 },
     { icon: History, label: "Reorder", delay: 0.2 },
@@ -20,6 +23,9 @@ export function QuickActions() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: action.delay, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            onClick={() => {
+              if (action.label === "Menu") setIsBookOpen(true);
+            }}
             className="flex flex-col items-center justify-center gap-2 p-3 rounded-xl hover:bg-white/5 active:scale-95 premium-transition group"
           >
             <div className="w-12 h-12 rounded-full bg-[#2A2A2A] flex items-center justify-center group-hover:bg-primary/20 premium-transition">
@@ -31,6 +37,7 @@ export function QuickActions() {
           </motion.button>
         ))}
       </div>
+      <BookMenu isOpen={isBookOpen} onClose={() => setIsBookOpen(false)} />
     </section>
   );
 }

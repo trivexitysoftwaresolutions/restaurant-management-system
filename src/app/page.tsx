@@ -39,7 +39,7 @@ export default function Home() {
         <div className="lg:col-span-8 xl:col-span-9 flex flex-col gap-10">
           <FeaturedDishSection />
           
-          <div className="flex flex-col gap-6">
+          <div className="flex flex-col gap-6" id="menu-section">
             <CategoryTabs 
               activeCategory={activeCategory} 
               setActiveCategory={setActiveCategory} 

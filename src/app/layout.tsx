@@ -17,6 +17,8 @@ import { CartProvider } from "@/context/CartContext";
 import { CartDrawer } from "@/components/CartDrawer";
 import { MyOrdersDrawer } from "@/components/MyOrdersDrawer";
 import { OrderSuccessToast } from "@/components/OrderSuccessToast";
+import { DishModal } from "@/components/DishModal";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Premium QR Ordering | Restro",
@@ -43,6 +45,9 @@ export default function RootLayout({
             <CartDrawer />
             <MyOrdersDrawer />
             <OrderSuccessToast />
+            <Suspense fallback={null}>
+              <DishModal />
+            </Suspense>
             {children}
           </CartProvider>
         </CustomerProvider>

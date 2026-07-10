@@ -28,7 +28,11 @@ export function FeaturedDishSection() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ delay: index * 0.1, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            onClick={() => router.push(`/dish/${item.id}`)}
+            onClick={() => {
+              const url = new URL(window.location.href);
+              url.searchParams.set('dishId', item.id);
+              router.push(url.pathname + url.search, { scroll: false });
+            }}
             className="group relative min-w-[320px] md:min-w-[420px] h-[400px] md:h-[440px] rounded-[2.5rem] overflow-hidden cursor-pointer snap-start border border-white/10 shadow-2xl"
           >
             {/* Ambient Blurred Background */}

@@ -47,7 +47,12 @@ export function HeroSection() {
           </p>
 
           <div className="flex items-center gap-4">
-            <button className="bg-primary text-primary-foreground px-8 py-3.5 rounded-full font-semibold text-sm premium-transition hover:scale-105 active:scale-95 shadow-premium">
+            <button 
+              onClick={() => {
+                document.getElementById('menu-section')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="bg-primary text-primary-foreground px-8 py-3.5 rounded-full font-semibold text-sm premium-transition hover:scale-105 active:scale-95 shadow-premium"
+            >
               Browse Menu
             </button>
             <button className="glass-panel text-foreground px-8 py-3.5 rounded-full font-semibold text-sm premium-transition hover:bg-white/10 active:scale-95">

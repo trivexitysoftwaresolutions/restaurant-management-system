@@ -67,6 +67,37 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
         </div>
       </section>
 
+      {/* Explore Other Categories Section */}
+      <section className="max-w-[1400px] mx-auto px-4 md:px-8 py-12 border-t border-white/10 mt-8">
+        <h2 className="font-cormorant text-3xl md:text-4xl font-bold text-white mb-8">
+          Explore Other Categories
+        </h2>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+          {menuCategories
+            .filter((c) => c.slug !== category.slug)
+            .map((otherCat) => (
+              <Link 
+                key={otherCat.slug} 
+                href={`/category/${otherCat.slug}`}
+                className="relative h-32 md:h-40 rounded-2xl overflow-hidden group border border-white/10"
+              >
+                <Image
+                  src={otherCat.image}
+                  alt={otherCat.name}
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-black/60 group-hover:bg-black/40 transition-colors" />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <h3 className="font-cormorant text-xl md:text-2xl font-bold text-white text-center px-2">
+                    {otherCat.name}
+                  </h3>
+                </div>
+              </Link>
+          ))}
+        </div>
+      </section>
+
       <Footer />
       <StickyCartBar />
     </main>

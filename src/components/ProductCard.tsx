@@ -19,13 +19,20 @@ export function ProductCard({ item, index }: ProductCardProps) {
   const cartItem = cart.find((c) => c.menuItem.id === item.id);
   const quantity = cartItem?.quantity || 0;
 
+  const openDishModal = () => {
+    // Check if we are already on a page, preserve the current path but add the query
+    const url = new URL(window.location.href);
+    url.searchParams.set('dishId', item.id);
+    router.push(url.pathname + url.search, { scroll: false });
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ delay: index * 0.1, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-      onClick={() => router.push(`/dish/${item.id}`)}
+      onClick={openDishModal}
       className="glass-panel rounded-2xl overflow-hidden flex gap-4 p-3 hover:bg-white/5 premium-transition group h-full cursor-pointer"
     >
       <div className="relative w-28 h-28 shrink-0 rounded-xl overflow-hidden bg-muted">
